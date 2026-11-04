@@ -265,8 +265,290 @@ article + article {
 
 /* ---------- Stations directory (home page) ---------- */
 
-.section.stations {
+.section.stations,
+.section.home-section {
   max-width: 72rem;
+}
+
+/* ---------- Experience timeline (home page) ---------- */
+
+/* Draw the line as segments between dots, so it ends at the last role. */
+.experience-stops::before {
+  display: none;
+}
+
+.experience-stops li {
+  padding-bottom: 1.75rem;
+}
+
+.experience-stops li:last-child {
+  padding-bottom: 0.5rem;
+}
+
+.experience-stops li::before {
+  z-index: 1;
+}
+
+/* The current role gets a bigger dot, like a transfer station. */
+.experience-stops li.is-current::before {
+  top: 0.1rem;
+  left: calc(var(--dot-x) - 0.8rem);
+  width: 1.6rem;
+  height: 1.6rem;
+  border-width: 5px;
+}
+
+.experience-stops li.is-current .stop-name {
+  font-size: 1.2rem;
+}
+
+.experience-stops li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 0.75rem;
+  bottom: -0.75rem;
+  left: calc(var(--dot-x) - 3px);
+  width: 6px;
+  background: var(--green);
+}
+
+.experience-stops .stop-name {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.experience-meta {
+  margin: 0.2rem 0 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--green);
+}
+
+.experience-text {
+  margin: 0;
+  max-width: 46rem;
+}
+
+/* ---------- About (home page) ---------- */
+
+.about-intro {
+  display: grid;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.about-intro p {
+  margin: 0;
+  max-width: 46rem;
+  font-size: 1.05rem;
+}
+
+.about-photo {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  max-width: 12rem;
+  border: 1.5px dashed var(--border);
+  border-radius: 12px;
+  background: var(--gray);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: #555;
+}
+
+@media (min-width: 700px) {
+  .about-intro {
+    grid-template-columns: minmax(0, 1fr) 12rem;
+    gap: 2rem;
+  }
+}
+
+.about-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+@media (min-width: 700px) {
+  .about-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+.about-card {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.about-card p {
+  margin: 0 0 0.4rem;
+}
+
+.about-label {
+  margin: 0 0 0.6rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--green);
+}
+
+.about-label:not(:first-child) {
+  margin-top: 1.1rem;
+}
+
+.about-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-weight: 600;
+  color: var(--navy);
+  text-decoration: none;
+}
+
+.about-link:hover {
+  text-decoration: underline;
+}
+
+.skill-group + .skill-group {
+  margin-top: 0.75rem;
+}
+
+.about-card .skill-group-name {
+  margin-bottom: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.chips li {
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--gray);
+  font-size: 0.85rem;
+  color: var(--navy);
+}
+
+.about-list {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.about-list li + li {
+  margin-top: 0.3rem;
+}
+
+/* ---------- Resume (home page) ---------- */
+
+.resume-intro {
+  margin: 0 0 1rem;
+}
+
+.resume-grid {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 700px) {
+  .resume-grid {
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+.resume-card {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.line-badge.resume-badge {
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 1.25rem;
+}
+
+.resume-name {
+  margin: 0.1rem 0 0.25rem;
+  font-size: 1.05rem;
+  color: var(--navy);
+}
+
+.resume-best {
+  margin: 0 0 0.75rem;
+  font-size: 0.92rem;
+  color: #555;
+}
+
+/* ---------- Contact (home page) ---------- */
+
+.section#contact {
+  border-bottom: 0;
+}
+
+.contact-band {
+  padding: 1.5rem 1.5rem 1.75rem;
+  border-radius: 12px;
+  background: var(--navy);
+  color: #fff;
+}
+
+.contact-band h2 {
+  margin: 0.25rem 0 0.5rem;
+  color: #fff;
+}
+
+.contact-band p {
+  margin: 0 0 1.25rem;
+  max-width: 46rem;
+}
+
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.btn.contact-email {
+  border-color: #fff;
+  background: #fff;
+  color: var(--navy);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.btn.contact-email:hover {
+  background: #eef1f7;
+}
+
+.btn.contact-outline {
+  border-color: #fff;
+  color: #fff;
+}
+
+.btn.contact-outline:hover {
+  background: rgb(255 255 255 / 0.12);
 }
 
 .stations-head {
@@ -1862,4 +2144,120 @@ article + article {
   .cr-details {
     transition: none;
   }
+}
+
+/* ---------- ShelfLife world: "Blueprint" ---------- */
+
+.blueprint {
+  --bp-bg: #174377;
+  --bp-box: #1d4f86;
+  --bp-line: #cfe3ff;
+  --bp-text: #ffffff;
+  --bp-text-2: #cfe3ff;
+  --bp-coral: #ff9b85;
+  --bp-amber: #ffd28a;
+  background-color: var(--bp-bg);
+  background-image:
+    linear-gradient(rgb(207 227 255 / 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(207 227 255 / 0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--bp-text);
+}
+
+.blueprint-inner {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 3rem 1rem 2.5rem;
+}
+
+.blueprint-label {
+  margin: 0 0 0.5rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: var(--bp-text-2);
+}
+
+.blueprint h1 {
+  margin: 0;
+  font-size: clamp(1.6rem, 4vw, 2.25rem);
+  line-height: 1.15;
+  color: var(--bp-text);
+}
+
+/* The diagram keeps a readable size and scrolls sideways on narrow screens. */
+.bp-diagram-wrap {
+  margin-top: 2rem;
+  overflow-x: auto;
+}
+
+.bp-diagram {
+  display: block;
+  width: 100%;
+  min-width: 56rem;
+  height: auto;
+  font-family: var(--mono);
+}
+
+.bp-room {
+  fill: none;
+  stroke: var(--bp-line);
+  stroke-opacity: 0.5;
+  stroke-width: 1;
+  stroke-dasharray: 6 4;
+}
+
+.bp-room-label {
+  fill: var(--bp-text-2);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.bp-link {
+  stroke: var(--bp-line);
+  stroke-width: 1.2;
+  stroke-opacity: 0.85;
+}
+
+.bp-arrow {
+  fill: none;
+  stroke: var(--bp-line);
+  stroke-width: 1.4;
+}
+
+.bp-box {
+  fill: var(--bp-box);
+  stroke: var(--bp-line);
+  stroke-width: 1.2;
+}
+
+.bp-box-head {
+  fill: var(--bp-line);
+  fill-opacity: 0.2;
+  stroke: var(--bp-line);
+  stroke-width: 1.2;
+}
+
+.bp-table-name {
+  fill: var(--bp-text);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.bp-col {
+  fill: var(--bp-text-2);
+  font-size: 11px;
+}
+
+.bp-key {
+  fill: var(--bp-text);
+  font-size: 9px;
+  letter-spacing: 0.05em;
+}
+
+.bp-note {
+  fill: var(--bp-text-2);
+  font-size: 10px;
+  font-style: italic;
 }

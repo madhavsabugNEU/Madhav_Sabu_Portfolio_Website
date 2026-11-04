@@ -1,79 +1,116 @@
+import { Link } from 'react-router-dom'
+
+const skillGroups = [
+  { label: 'Languages', items: ['Python', 'SQL'] },
+  {
+    label: 'Libraries and tools',
+    items: [
+      'pandas',
+      'NumPy',
+      'scikit-learn',
+      'Matplotlib',
+      'Streamlit',
+      'Jupyter Notebook',
+      'Git/GitHub',
+      'Excel',
+      'MySQL',
+      'Figma',
+      'DaVinci Resolve',
+    ],
+  },
+  {
+    label: 'Skills',
+    items: [
+      'machine learning',
+      'data analysis',
+      'data cleaning',
+      'data validation',
+      'data visualization',
+      'database design',
+      'REST APIs',
+      'UI/UX design',
+    ],
+  },
+]
+
+const activities = [
+  'Smith and Kennedy Hall Vice President',
+  'Kappa Theta Pi (Professional Technology Fraternity), Pledge Engagement Lead',
+  'Resident Student Association',
+  'Badminton team captain (UWCSEA)',
+  'Special Olympics technical officer (coordinated logistics and coached badminton athletes)',
+]
+
+// Home page About section: intro beside a photo, then a grid of cards.
 export default function About() {
   return (
-    <section id="about" className="section">
-      <h2>About</h2>
-      <p>
-        I'm a second-year student at Northeastern University in Boston. I grew
-        up in India, Dubai (where I lived for five years), and Singapore, where
-        I attended UWC South East Asia and completed the IB Diploma.
-      </p>
-      <p>
-        I'm looking for Spring 2027 co-ops (January to June 2027) in data
-        science, analytics, data engineering, AI/ML, computational biology, and
-        finance-adjacent analytics.
-      </p>
+    <section id="about" className="section home-section" aria-labelledby="about-heading">
+      <div className="stations-head">
+        <h2 id="about-heading">About</h2>
+      </div>
 
-      <h3>Education</h3>
-      <p>
-        <strong>Northeastern University</strong>, Boston, MA · Expected May 2029
-        <br />
-        B.S. in Data Science &amp; Business, Concentration in Marketing
-        Analytics, Minor in Biology
-        <br />
-        GPA 3.74/4.0 · Dean's List (Fall 2025, Spring 2026)
-      </p>
+      <div className="about-intro">
+        <p>
+          I'm a second-year student at Northeastern University in Boston. I grew
+          up in India, Dubai, and Singapore, where
+          I attended UWC South East Asia and completed the IB Diploma.
+        </p>
+        <div className="about-photo">[TODO: photo]</div>
+      </div>
 
-      <h3>Skills</h3>
-      <ul>
-        <li><strong>Languages:</strong> Python, SQL</li>
-        <li>
-          <strong>Libraries and tools:</strong> pandas, NumPy, scikit-learn,
-          Streamlit, Jupyter Notebook, Git/GitHub, Excel, MySQL, Figma, DaVinci
-          Resolve
-        </li>
-        <li>
-          <strong>Skills:</strong> machine learning, data analysis, data
-          cleaning, data visualization, database design, REST APIs, UI/UX design
-        </li>
-      </ul>
+      <div className="about-grid">
+        <div className="about-card">
+          <h3 className="about-label">Education</h3>
+          <p>
+            <strong>Northeastern University</strong>, Boston, MA · Expected May 2029
+          </p>
+          <p>
+            B.S. in Data Science &amp; Business, Concentration in Marketing
+            Analytics, Minor in Biology
+          </p>
+          <p>GPA 3.74/4.0 · Dean's List (Fall 2025, Spring 2026)</p>
+          <Link to="/line/e" className="about-link">
+            See all coursework on the E line →
+          </Link>
+        </div>
 
-      <h3>Relevant coursework</h3>
-      <p>
-        Discrete Structures, Introduction to Databases, Intermediate Programming
-        with Data, Foundations of Data Science, Advanced Programming with Data,
-        Information Presentation and Visualization, Programming with Consumer
-        Data, Financial Accounting &amp; Reporting, Financial Management,
-        Introduction to Marketing, Buildings and Cities.
-      </p>
-      <p>
-        IB transfer credit: General Biology 1 and 2, Principles of
-        Macroeconomics and Microeconomics.
-      </p>
+        <div className="about-card">
+          <h3 className="about-label">Skills</h3>
+          {skillGroups.map((group) => (
+            <div key={group.label} className="skill-group">
+              <p className="skill-group-name">{group.label}</p>
+              <ul className="chips">
+                {group.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
 
-      <h3>Earlier project</h3>
-      <p>
-        <strong>Sentiment Analysis Classifier</strong> (Jun to Jul 2023): With a
-        team of four, I built a classifier in Python, pandas, and Jupyter that
-        labeled IMDB movie reviews as positive or negative.
-      </p>
+        <div className="about-card">
+          <h3 className="about-label">Leadership and activities</h3>
+          <ul className="about-list">
+            {activities.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
 
-      <h3>Leadership and activities</h3>
-      <ul>
-        <li>Smith and Kennedy Hall Vice President</li>
-        <li>Kappa Theta Pi (Technology Fraternity)</li>
-        <li>Resident Student Association</li>
-        <li>Badminton team captain (UWCSEA)</li>
-        <li>
-          Special Olympics technical officer (coordinated logistics and coached
-          badminton athletes)
-        </li>
-      </ul>
-
-      <h3>Outside of class</h3>
-      <p>
-        Outside of class, I enjoy badminton, football (soccer) analytics,
-        biking, and exploring new music.
-      </p>
+        <div className="about-card">
+          <h3 className="about-label">Outside of class</h3>
+          <p>
+            Outside of class, I enjoy badminton, football (soccer) analytics,
+            biking, and exploring new music.
+          </p>
+          <h3 className="about-label">Earlier project</h3>
+          <p>
+            <strong>Sentiment Analysis Classifier</strong> (Jun to Jul 2023): With
+            a team of four, I built a classifier in Python, pandas, and Jupyter
+            that labeled IMDB movie reviews as positive or negative.
+          </p>
+        </div>
+      </div>
     </section>
   )
 }

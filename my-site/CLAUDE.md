@@ -35,15 +35,16 @@ If anything in this file conflicts with a request, ask before acting.
 - Madhav Sabu (he/him), second-year student at Northeastern University, Boston, MA
 - B.S. in Data Science & Business, Concentration in Marketing Analytics, Minor in Biology. Expected graduation May 2029.
 - GPA 3.74/4.0. Dean's List (Fall 2025, Spring 2026).
-- Grew up in India, Dubai (lived there 5 years), and Singapore. Attended UWC South East Asia in Singapore (IB Diploma).
+- Grew up in India, Dubai (lived there 5 years, but don't mention the length on the site), and Singapore. Attended UWC South East Asia in Singapore (IB Diploma).
 - Pitch: I combine data science with business thinking to turn messy data into reliable insights and tools.
-- Contact: madhavsabug@gmail.com · (617) 505-2098 · linkedin.com/in/madhavsabu/ · github.com/madhavsabugNEU
+- Contact on the site: madhavsabug@gmail.com · linkedin.com/in/madhavsabu/ · github.com/madhavsabugNEU
+- Never show my phone number anywhere on the site. It's only inside the resume PDFs, which is fine.
 
 ## Skills (list only these)
 
 - Languages: Python (strongest), SQL. Java and C# are basic, so don't feature them prominently.
-- Libraries and tools: pandas, NumPy, scikit-learn, Streamlit, Jupyter Notebook, Git/GitHub, Excel, MySQL, Figma, DaVinci Resolve
-- Skills: machine learning, data analysis, data cleaning, data visualization, database design, REST APIs, UI/UX design
+- Libraries and tools: pandas, NumPy, scikit-learn, Matplotlib, Streamlit, Jupyter Notebook, Git/GitHub, Excel, MySQL, Figma, DaVinci Resolve
+- Skills: machine learning, data analysis, data cleaning, data validation, data visualization, database design, REST APIs, UI/UX design
 
 ## Relevant coursework
 
@@ -89,13 +90,13 @@ IB transfer credit: General Biology 1 and 2, Principles of Macroeconomics and Mi
 
 ## Experience
 
-- **Northeastern Electric Racing, Software Product Team Member** (Jan 2026 to present): designed high-fidelity Figma mockups for features of the team's main data dashboard, gathered user feedback and iterated on designs, and presented concepts to club leadership for board approval. Don't show Figma screenshots unless I say the club approved it.
-- **Knack, Peer Tutor** (Feb to Jun 2026): tutored financial accounting (ACCT 1201) and Excel-based calculations. 5-star rating across student reviews.
+- **Northeastern Electric Racing, Software Product Team Member** (Jan 2026 to present, Boston, MA): designed high-fidelity Figma mockups for features of the team's main data dashboard, gathered user feedback and iterated on designs, and presented concepts to club leadership for board approval. Don't show Figma screenshots unless I say the club approved it.
+- **Knack, Peer Tutor** (Feb to Jun 2026, Boston, MA): tutored financial accounting (ACCT 1201) and Excel-based calculations. 5-star rating across student reviews.
 - **My Creative Factory, Product & Client Management Intern** (Jun to Jul 2024, Singapore): turned requirements from 4 clients into customized deliverables, did competitive analysis for internal reports, and produced and edited client marketing videos in DaVinci Resolve.
 
 ## Leadership and activities
 
-Smith and Kennedy Hall Vice President · Kappa Theta Pi (Technology Fraternity) · Resident Student Association · Badminton team captain (UWCSEA) · Special Olympics technical officer (coordinated logistics and coached badminton athletes)
+Smith and Kennedy Hall Vice President · Kappa Theta Pi (Professional Technology Fraternity), Pledge Engagement Lead · Resident Student Association · Badminton team captain (UWCSEA) · Special Olympics technical officer (coordinated logistics and coached badminton athletes)
 
 ## Interests
 
@@ -294,6 +295,69 @@ INFO     Processing complete: 98 -> 92 rows
 
 **Keep all of this data in a data file** (for example `src/data/pipeline.js`) so it's easy to update.
 
+### ShelfLife world ("Blueprint"), approved design
+
+Route: `/shelflife`. It gets the standard navy top bar ("← Back to …" plus "lines B · D") and a next-stop sign at the bottom. The page is a zoomed-in version of the station card preview: an architectural drawing of the database I designed.
+
+**Colors** (from the existing card preview): background `#174377` with a faint grid in `#cfe3ff` at about 15% opacity, table boxes `#1d4f86` with `#cfe3ff` outlines, titles and table names white `#ffffff`, secondary text `#cfe3ff`, revision notes in "red pencil" coral `#ff9b85`, and role highlighting in pale amber `#ffd28a`. Monospace for table names, column names, and labels. These colors stay inside the ShelfLife world.
+
+**Header:** a small monospace label "blueprint," the title "ShelfLife," a "Team of 5" pill, and a meta line: "CS 3200 Database Design course project · Jan to Apr 2026 · MySQL, Flask, Streamlit, Docker, Python." Then this description:
+> My team of five built ShelfLife, a course materials marketplace for Northeastern students where every listing is tied to a course. I designed the 18-table relational schema underneath it.
+
+**The ER diagram (main piece, desktop and tablet)**
+- Draw my real schema (listed below). LISTING sits in the center, since it links to the most tables. The four groups sit around it, each inside a dashed outline with a small label, like rooms on a floor plan: Catalog (left), Marketplace (around LISTING), Moderation (upper right), Analytics (lower right).
+- Each table box shows its name, primary key (marked PK), and foreign keys (marked FK) by default. Tapping or clicking a box expands it to show all its columns, and highlights the tables it links to. Click again or press Escape to collapse.
+- Foreign-key lines are drawn as thin `#cfe3ff` lines between the boxes, ending at the referenced table. On load, they draw themselves in one by one. With reduced motion, they appear instantly.
+- PLATFORM_METRIC has no foreign keys. Place it in Analytics with a small note: "snapshot table · no links."
+- **Annotations:** small monospace callouts with a thin leader line, pointing at real constraints in the schema:
+  - TRANSACTION: "one sale per listing" (`listing_id` is UNIQUE)
+  - REVIEW: "rating 1–5" (CHECK constraint)
+  - COURSE_MATERIAL: "an item links to a course only once" (UNIQUE course_id + item_id)
+  - WISHLIST: "no duplicate saves" (UNIQUE user_id + listing_id)
+  - BUNDLE_LISTING and ADMIN_FLAG: "junction table · composite key"
+- **Title block** (bottom right corner, bordered like a real blueprint title block): "ShelfLife · relational schema" / "Schema design: Madhav Sabu" / "Team project · 5 people · CS 3200" / "18 tables."
+
+**Role buttons** (above the diagram): Buyer, Seller, Data analyst, Admin, plus "All." Clicking a role highlights that role's tables in pale amber and dims the rest. "All" is the default.
+- Buyer: COURSE, LISTING, WISHLIST, TRANSACTION, REVIEW
+- Seller: LISTING, ITEM, PRICE_HISTORY, BUNDLE
+- Data analyst: REPORT, PLATFORM_METRIC, TRANSACTION, PRICE_HISTORY
+- Admin: FLAG, ADMIN_FLAG, COURSE, DEPARTMENT
+
+**Phones:** the full diagram doesn't fit, so show the four rooms as stacked cards. Each card lists its tables, and tapping a table shows its columns and what it links to (in plain text, for example "→ links to USER, ITEM, COURSE"). Role buttons still work, highlighting tables in the cards. The title block sits at the end.
+
+**Revision notes (my contributions):** below the diagram, a short "revision notes" panel styled like red-pencil corrections. Each note is one complete sentence, and on desktop a small coral marker on the diagram points to the related table:
+1. (title block) I designed the relational schema, including the linked tables and foreign keys.
+2. (on PRICE_HISTORY) I found and fixed data integrity issues, such as missing price-history records.
+3. (on the whole diagram) I generated the mock data the team used for testing.
+4. (on the Analytics room) I helped the team debug the Streamlit analytics dashboard.
+Don't add any detail beyond these sentences.
+
+**Below that:** the demo video (keep the existing privacy-friendly YouTube embed), labeled "walkthrough · demo video," and a GitHub repo pill button.
+
+**Station card preview** (home page): label the three existing boxes USER, LISTING, and ITEM, with the two dashed lines connecting each to LISTING.
+
+**Keep all schema data in a data file** (`src/data/shelflife.js`): the tables, their columns, keys, group, links, annotations, role mapping, and revision notes. The diagram, phone cards, and card preview all read from it.
+
+**The schema** (from `database-files/01_schema.sql` in the ShelfLife repo). Format: TABLE (group): columns. PK = primary key, FK = foreign key (→ referenced table), U = unique.
+- DEPARTMENT (Catalog): dept_id PK, dept_name, college
+- COURSE (Catalog): course_id PK, dept_id FK → DEPARTMENT, course_number, course_name, semester, is_active
+- ITEM (Catalog): item_id PK, title, author, isbn U, category
+- COURSE_MATERIAL (Catalog): course_material_id PK, course_id FK → COURSE, item_id FK → ITEM, required; U (course_id, item_id)
+- PRICE_HISTORY (Catalog): history_id PK, item_id FK → ITEM, semester, avg_price, low_price, high_price, total_sales
+- USER (Marketplace): user_id PK, name, email U, is_active, avg_rating, created_at
+- LISTING (Marketplace): listing_id PK, user_id FK → USER, item_id FK → ITEM, course_id FK → COURSE, price, condition_desc, status, created_at, search_count
+- TRANSACTION (Marketplace): transaction_id PK, listing_id FK → LISTING U, buyer_id FK → USER, sale_price, sold_at, days_to_sale
+- REVIEW (Marketplace): review_id PK, listing_id FK → LISTING, reviewer_id FK → USER, seller_id FK → USER, rating (CHECK 1–5), comment, created_at
+- WISHLIST (Marketplace): wishlist_id PK, user_id FK → USER, listing_id FK → LISTING, saved_at; U (user_id, listing_id)
+- BUNDLE (Marketplace): bundle_id PK, user_id FK → USER, total_price, created_at
+- BUNDLE_LISTING (Marketplace): bundle_id FK → BUNDLE, listing_id FK → LISTING; PK (bundle_id, listing_id)
+- ADMIN (Moderation): admin_id PK, name, email U
+- FLAG (Moderation): flag_id PK, listing_id FK → LISTING, reason, flag_status, flagged_at
+- ADMIN_FLAG (Moderation): admin_id FK → ADMIN, flag_id FK → FLAG; PK (admin_id, flag_id)
+- ANALYST (Analytics): analyst_id PK, name, email U
+- REPORT (Analytics): report_id PK, analyst_id FK → ANALYST, filter_params, export_format, created_at
+- PLATFORM_METRIC (Analytics): metric_id PK, active_users, total_listings, total_transactions, recorded_at
+
 ### Guardrails
 
 - A simple nav to jump to any section must always be available.
@@ -301,6 +365,47 @@ INFO     Processing complete: 98 -> 92 rows
 - Fast-loading. No heavy libraries unless really needed.
 - Typography: a clean sans-serif for now (to be refined in polish). Monospace for small transit-style labels.
 - Resume PDFs go in `public/resumes/` as `Madhav-Sabu-Resume-CS.pdf`, `Madhav-Sabu-Resume-Econ.pdf`, and `Madhav-Sabu-Resume-Bio.pdf`.
+
+### Home sections: Experience, About, Resume, Contact (approved design)
+
+These already exist as components with real content. Step 7 restyles them in the frame colors and makes a few content fixes. Reuse existing styles (`--navy`, `--green`, `--gray`, `--border`, `--mono`, `.btn`, `.btn-filled`, and the station card look). No new colors, fonts, or packages.
+
+**Shared rules for all four sections**
+- Widen each section to match Stations (`max-width: 72rem`).
+- Section headings follow the Stations pattern: a navy `h2` with a small green monospace label beside it only where it adds information (Experience, About, and Resume have no label; Contact has "End of the line" inside its band).
+- No motion beyond simple hover states. Everything works on phones (single column).
+
+**Experience** (`Experience.jsx`), no count label beside the heading (removed at Madhav's request)
+- The current role gets a bigger dot and a slightly larger title.
+- Replace the bullet lists with a vertical green timeline, one stop per role, styled like the stops on the line pages (green line, white dot with a green ring).
+- Each stop: role title (navy, bold), then a green monospace label with organization · dates · location, then one short paragraph.
+- Combine each role's existing sentences into one paragraph. Don't change the facts. Present tense for Electric Racing, past tense for Knack and My Creative Factory.
+
+**About** (`About.jsx`)
+- Top: the intro paragraph (second-year at Northeastern, where I grew up, UWCSEA, IB Diploma) beside a photo placeholder box labeled `[TODO: photo]` (stacked on phones).
+- Below: a grid of white cards (border `#e1e4ea`, 12px corners), each with a green monospace label:
+  - **Education:** Northeastern University, Boston, MA · Expected May 2029; B.S. in Data Science & Business, Concentration in Marketing Analytics, Minor in Biology; GPA 3.74/4.0 · Dean's List (Fall 2025, Spring 2026).
+  - **Skills:** small chips in three groups: Languages (Python, SQL), Libraries and tools, and Skills, exactly as listed in "Skills" above, including Matplotlib and data validation.
+  - **Leadership and activities:** the existing list, shown compactly.
+  - **Outside of class:** the existing sentence.
+- Keep the Sentiment Analysis Classifier as a one-line "Earlier project" note. No link.
+- Remove the full coursework list from About (each line page already shows it). Replace it with one link: "See all coursework on the E line →" to `/line/e`.
+- Move the Spring 2027 co-op sentence from About to Contact.
+
+**Resume** (`Resume.jsx`)
+- Replace the link list with one card per resume version, read from `resumes` in `src/data/links.js`.
+- Each card: the matching line's letter badge (green circle, like the map), the version name, a one-line "best for," and a filled navy "Download PDF" button.
+- Add `line` and `bestFor` fields to each entry in `links.js`:
+  - CS → line D, "Data science, data engineering, and AI/ML roles."
+  - Econ → line B, "Business analytics and finance-adjacent roles."
+  - Bio → line C, "Computational biology and biotech roles."
+- Adding a new version (for example CS + Lab) should only need a new entry in `links.js` and the PDF in `public/resumes/`.
+
+**Contact** (`Contact.jsx`), label "end of the line"
+- A navy band (`#1F3864`, white text, 12px corners), styled like the next-stop sign.
+- Heading "Contact," then: "I'm looking for Spring 2027 co-op roles (January to June 2027) in data science, analytics, and related fields. The best way to reach me is by email."
+- Pill buttons: Email (filled white with navy text, showing the full address so it can be copied), LinkedIn, and GitHub (white outline).
+- Never show my phone number.
 
 ---
 
@@ -312,13 +417,23 @@ Get everything working and complete first. Fancy animations come last.
 2. ✅ Skeleton
 3. ✅ Hero: the transit map and "Pick your route"
 4. ✅ xG world, v2 design (placeholder data)
-5. **Restructure:** routing, the home page with the Stations directory and preview cards, line pages, world pages with the navy bar and next-stop sign, `vercel.json`, and nav styling. Move the existing xG chapter onto `/xg`. Other worlds can be plain placeholder pages for now.
+5. ✅ **Restructure:** routing, the home page with the Stations directory and preview cards, line pages, world pages with the navy bar and next-stop sign, `vercel.json`, and nav styling. Move the existing xG chapter onto `/xg`. Other worlds can be plain placeholder pages for now.
 6. ✅ **Data Cleaning Pipeline world ("Clean run")**: design approved (see "Pipeline world")
-7. Experience, About, Resume, and Contact: content and navy-and-white styling
+7. ✅ Experience, About, Resume, and Contact: content and navy-and-white styling (see "Home sections")
+   - 7a. Experience timeline
+   - 7b. About cards (including the skills fixes)
+   - 7c. Resume cards (including the `links.js` fields)
+   - 7d. Contact band
 8. The remaining worlds (each designed in the design chat first): ShelfLife ("Blueprint") → Research ("Lab notebook")
+   - 8a. ShelfLife data file (`src/data/shelflife.js`) and the static desktop diagram with groups, tables, and foreign-key lines
+   - 8b. Diagram interactions: expand a table, role buttons, line draw-in (respecting reduced motion)
+   - 8c. Header, annotations, title block, revision notes, video, and GitHub link
+   - 8d. Phone layout (stacked room cards) and the labeled station card preview
+   - 8e. Research ("Lab notebook"): design in the design chat first
 9. Swap in real assets as they arrive (see "Waiting on Madhav")
 10. Make it fancy: card-to-page expand animation, line boarding animation, other motion (always respecting reduced motion)
 11. Polish: mobile, load speed, accessibility, typography, final proofread
+12. Madhav swaps in the final CS, Econ, and Bio resume PDFs in `public/resumes/` (same file names). Don't flag the resumes as missing before then.
 
 ## Waiting on Madhav (assets to add later)
 
@@ -329,9 +444,8 @@ Leave clear placeholders for these until I provide them. Never fill them with ma
 - [ ] **xG extras (optional):** a calibration plot, feature importances, and a notebook link
 - [x] **Data Cleaning Pipeline:** done. Real run data is in the "Pipeline world" section.
 - [ ] **Pipeline (optional):** if I update the cleaning report to count the validation step (100 → 92 with a per-stage breakdown), update the report card on the pipeline world and remove the footnote.
-- [ ] **ShelfLife schema:** the SQL `CREATE TABLE` file or a list of tables, columns, and foreign keys (for the Blueprint chapter)
+- [x] **ShelfLife schema:** done. It's listed in the "ShelfLife world" section.
 - [ ] **El Salvador paper:** PDF for `public/papers/`
-- [ ] **Resumes:** final CS, Econ, and Bio PDFs in `public/resumes/` (remove Mathematical Foundations of AI; make the GPA consistent)
 - [ ] **Photo:** a headshot or casual photo for About
 - [ ] **Electric Racing:** whether the club approved sharing Figma screenshots
 - [ ] **Enzyme experiment (optional):** chart or photos
@@ -339,8 +453,19 @@ Leave clear placeholders for these until I provide them. Never fill them with ma
 
 ## Current status
 
-- Steps 1 to 5 are done (assuming the restructure and hero instructions are finished).
+- Steps 1 to 5 are done, including the restructure and hero instructions (checked in the browser).
 - Step 6 is done: the pipeline "Clean run" world is live at `/pipeline`. All rows, counts, stages, report values, file tree, config lines, and log lines are in `src/data/pipeline.js`. The station card preview shows "100 → 92 rows" (read from the same file).
   - The pipeline station card text no longer says it cleans JSON (per the accuracy note).
   - "lines …" labels are now alphabetical (B · C · D), except xG, which lists D first (`leadLine` in `src/data/worlds.js`).
-- Next: Step 7 (Experience, About, Resume, Contact).
+- Step 7 design is approved (see "Home sections" in the design concept).
+  - 7a is done: Experience is now a vertical green timeline (one stop per role, bigger dot for the current role, no count label, widened to 72rem). The `knack` and `creative-factory` anchors are kept so the B line stops still link to them.
+  - 7b is done: About has the intro beside a `[TODO: photo]` box, then a 2-column card grid (Education with the "See all coursework on the E line →" link, Skills as chips including Matplotlib and data validation, Leadership and activities, Outside of class with the Earlier project note). The full coursework list is removed. No count label beside the heading, to match Experience. The co-op sentence now lives in Contact (plain text until 7d).
+  - 7c is done: Resume shows one card per version (letter badge, name, "Best for" line, filled navy "Download PDF" button), read from `resumes` in `src/data/links.js`, which now has `line` and `bestFor` fields. No count label beside the heading.
+  - 7d is done: Contact is a navy band with a small "End of the line" label inside it, the co-op sentence, and pill buttons (white Email button showing the full address, outlined LinkedIn and GitHub). Step 7 is complete.
+- Step 8 ShelfLife design is approved and the schema is in (see "ShelfLife world").
+  - 8a is done: `src/data/shelflife.js` holds all 18 tables (columns, keys, group, box position), the four room outlines, annotations, role mapping, revision notes, and links. `ShelfLifeDiagram.jsx` draws the static diagram on the blueprint grid: dashed rooms, boxes showing PK/FK columns, and straight foreign-key lines with arrowheads at the referenced table. Box positions were placed by hand so no line crosses a table. Below about 900px wide the diagram scrolls sideways (phone cards come in 8d). The old plain-text content (contributions, video, GitHub) sits below the blueprint until 8c.
+- Next: Step 8b (diagram interactions).
+
+## Future notes (not scheduled yet)
+
+- Moving between stops feels jarring (jumping from the white frame into each world and back). Smooth this out later, probably as part of step 10. Design it in the design chat first.
