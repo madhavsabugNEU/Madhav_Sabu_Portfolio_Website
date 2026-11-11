@@ -299,9 +299,9 @@ INFO     Processing complete: 98 -> 92 rows
 
 Route: `/shelflife`. It gets the standard navy top bar ("← Back to …" plus "lines B · D") and a next-stop sign at the bottom. The page is a zoomed-in version of the station card preview: an architectural drawing of the database I designed.
 
-**Colors** (from the existing card preview): background `#174377` with a faint grid in `#cfe3ff` at about 15% opacity, table boxes `#1d4f86` with `#cfe3ff` outlines, titles and table names white `#ffffff`, secondary text `#cfe3ff`, revision notes in "red pencil" coral `#ff9b85`, and role highlighting in pale amber `#ffd28a`. Monospace for table names, column names, and labels. These colors stay inside the ShelfLife world.
+**Colors** (from the existing card preview): background `#174377` with a faint grid in `#cfe3ff` at about 15% opacity, table boxes `#1d4f86` with `#cfe3ff` outlines, titles and table names white `#ffffff`, secondary text `#cfe3ff`, contribution dashes in "red pencil" coral `#ff9b85`, and role highlighting in pale amber `#ffd28a`. Monospace for table names, column names, and labels. These colors stay inside the ShelfLife world.
 
-**Header:** a small monospace label "blueprint," the title "ShelfLife," a "Team of 5" pill, and a meta line: "CS 3200 Database Design course project · Jan to Apr 2026 · MySQL, Flask, Streamlit, Docker, Python." Then this description:
+**Header** (at the top of the blueprint area, above the role buttons, on the blue background, not on white): a small monospace label "blueprint," the title "ShelfLife" in large white text, a "Team of 5" pill, and a meta line: "CS 3200 Database Design course project · Jan to Apr 2026 · MySQL, Flask, Streamlit, Docker, Python." The meta line is monospace in `#cfe3ff`. Then this description, in `#cfe3ff` body text with a max width of about 40rem (it replaces the old placeholder text, which repeated "team of five" and "CS 3200"):
 > My team of five built ShelfLife, a course materials marketplace for Northeastern students where every listing is tied to a course. I designed the 18-table relational schema underneath it.
 
 **The ER diagram (main piece, desktop and tablet)**
@@ -325,18 +325,28 @@ Route: `/shelflife`. It gets the standard navy top bar ("← Back to …" plus "
 
 **Phones:** the full diagram doesn't fit, so show the four rooms as stacked cards. Each card lists its tables, and tapping a table shows its columns and what it links to (in plain text, for example "→ links to USER, ITEM, COURSE"). Role buttons still work, highlighting tables in the cards. The title block sits at the end.
 
-**Revision notes (my contributions):** below the diagram, a short "revision notes" panel styled like red-pencil corrections. Each note is one complete sentence, and on desktop a small coral marker on the diagram points to the related table:
-1. (title block) I designed the relational schema, including the linked tables and foreign keys.
-2. (on PRICE_HISTORY) I found and fixed data integrity issues, such as missing price-history records.
-3. (on the whole diagram) I generated the mock data the team used for testing.
-4. (on the Analytics room) I helped the team debug the Streamlit analytics dashboard.
-Don't add any detail beyond these sentences.
+**The page below the diagram ("sheet notes"), approved design**
 
-**Below that:** the demo video (keep the existing privacy-friendly YouTube embed), labeled "walkthrough · demo video," and a GitHub repo pill button.
+The bottom half of the page continues the drawing sheet. It replaces the old plain white content (the "My contributions" bullets, the bare video, and the underlined "View on GitHub" link).
+- **The blueprint keeps going.** The `#174377` background and faint grid continue below the diagram all the way down to the next-stop sign. No white band between the diagram and the sign.
+- **Dimension-line dividers** separate the sections, replacing plain headings and grey rules: a thin `#cfe3ff` horizontal line with small vertical tick marks at both ends and a short monospace label centered on it (the line breaks around the label), like a measurement on an architectural drawing. Labels: "sheet notes · my contributions" above the contributions box, and "detail A · walkthrough" above the video.
+- **Contributions box (simplified after 8d):** one bordered box (`#cfe3ff` lines at about 40% opacity) with one contribution per row and a thin rule between rows. No column headers, no REV letters, no REF column, and no markers on the diagram.
+  - Each row starts with a small coral `#ff9b85` dash (the "red pencil" touch), followed by the sentence in white body text.
+  - The four sentences, in this order:
+    1. I designed the relational schema, including the linked tables and foreign keys.
+    2. I generated the mock data the team used for testing.
+    3. I found and fixed data integrity issues, such as missing price-history records.
+    4. I helped the team debug the Streamlit analytics dashboard.
+  - Use exactly these sentences. Don't add any detail beyond them.
+  - Same layout on phones (the box is already one column).
+- **Demo video as "Detail A":** the existing privacy-friendly YouTube embed sits inside a darker panel (`#1d4f86`, about 12px padding) with a thin `#cfe3ff` border and small L-shaped corner marks at all four corners, like a detail view on a drawing. Below it, a small monospace caption in `#cfe3ff`: "Team demo of the finished app." Keep it 16:9 and full width of the text column on phones.
+- **GitHub link:** replace the underlined link with an outlined pill (`#cfe3ff` border and text, transparent background, white on hover): "View the repo on GitHub →".
+- **End of the sheet:** the blueprint area finishes with a thin `#cfe3ff` border line across the bottom and a small monospace "end of sheet" label at the right, then the navy next-stop sign. The bigger transition fix stays in "Future notes."
+- Text column width for everything below the diagram: about 48rem, centered, so it lines up with the header.
 
 **Station card preview** (home page): label the three existing boxes USER, LISTING, and ITEM, with the two dashed lines connecting each to LISTING.
 
-**Keep all schema data in a data file** (`src/data/shelflife.js`): the tables, their columns, keys, group, links, annotations, role mapping, and revision notes. The diagram, phone cards, and card preview all read from it.
+**Keep all schema data in a data file** (`src/data/shelflife.js`): the tables, their columns, keys, group, links, annotations, role mapping, and the four contribution sentences. The diagram, phone cards, and card preview all read from it.
 
 **The schema** (from `database-files/01_schema.sql` in the ShelfLife repo). Format: TABLE (group): columns. PK = primary key, FK = foreign key (→ referenced table), U = unique.
 - DEPARTMENT (Catalog): dept_id PK, dept_name, college
@@ -427,9 +437,11 @@ Get everything working and complete first. Fancy animations come last.
 8. The remaining worlds (each designed in the design chat first): ShelfLife ("Blueprint") → Research ("Lab notebook")
    - 8a. ShelfLife data file (`src/data/shelflife.js`) and the static desktop diagram with groups, tables, and foreign-key lines
    - 8b. Diagram interactions: expand a table, role buttons, line draw-in (respecting reduced motion)
-   - 8c. Header, annotations, title block, revision notes, video, and GitHub link
-   - 8d. Phone layout (stacked room cards) and the labeled station card preview
-   - 8e. Research ("Lab notebook"): design in the design chat first
+   - 8c. Header at the top of the blueprint, annotations, and title block
+   - 8d. The sheet below the diagram: blueprint background continues, dimension-line dividers, revision table with matching diagram markers, "Detail A" video frame, GitHub pill, end of sheet (see "The page below the diagram")
+   - 8e. Phone layout (stacked room cards) and the labeled station card preview
+   - 8f. Simplify the contributions box: remove the A–D markers from the diagram and the REV / REF columns from the table, so it's one bordered column with a coral dash per row (see "Contributions box"). Remove the unused `rev`, `ref`, and marker fields from `revisionNotes` in `shelflife.js`.
+   - 8g. Research ("Lab notebook"): design in the design chat first
 9. Swap in real assets as they arrive (see "Waiting on Madhav")
 10. Make it fancy: card-to-page expand animation, line boarding animation, other motion (always respecting reduced motion)
 11. Polish: mobile, load speed, accessibility, typography, final proofread
@@ -463,8 +475,15 @@ Leave clear placeholders for these until I provide them. Never fill them with ma
   - 7c is done: Resume shows one card per version (letter badge, name, "Best for" line, filled navy "Download PDF" button), read from `resumes` in `src/data/links.js`, which now has `line` and `bestFor` fields. No count label beside the heading.
   - 7d is done: Contact is a navy band with a small "End of the line" label inside it, the co-op sentence, and pill buttons (white Email button showing the full address, outlined LinkedIn and GitHub). Step 7 is complete.
 - Step 8 ShelfLife design is approved and the schema is in (see "ShelfLife world").
-  - 8a is done: `src/data/shelflife.js` holds all 18 tables (columns, keys, group, box position), the four room outlines, annotations, role mapping, revision notes, and links. `ShelfLifeDiagram.jsx` draws the static diagram on the blueprint grid: dashed rooms, boxes showing PK/FK columns, and straight foreign-key lines with arrowheads at the referenced table. Box positions were placed by hand so no line crosses a table. Below about 900px wide the diagram scrolls sideways (phone cards come in 8d). The old plain-text content (contributions, video, GitHub) sits below the blueprint until 8c.
-- Next: Step 8b (diagram interactions).
+  - 8a is done: `src/data/shelflife.js` holds all 18 tables (columns, keys, group, box position), the four room outlines, annotations, role mapping, revision notes, and links. `ShelfLifeDiagram.jsx` draws the diagram on the blueprint grid: dashed rooms, boxes showing PK/FK columns, and straight foreign-key lines with arrowheads at the referenced table. Box positions were placed by hand so no line crosses a table. Below about 900px wide the diagram scrolls sideways (phone cards come in 8e). The old plain-text content (contributions, video, GitHub) sits below the blueprint until 8c and 8d.
+  - 8b is done: clicking (or Enter/Space on) a table expands it to all columns (PK, FK, U, CHK tags) and highlights its linked tables and lines in white; click again or Escape collapses. Role buttons (All, Buyer, Seller, Data analyst, Admin) sit above the diagram with the hint "click a table to see all its columns"; a role outlines its tables in pale amber and dims the rest, and the amber wins over the white "linked" outline. Foreign-key lines draw in one by one on load (arrowheads fade in after each line); with reduced motion they appear instantly. The open table is also drawn as a copy on top so it isn't hidden under its neighbors.
+- The design for the rest of the page is approved (see "The page below the diagram" in "ShelfLife world"). Step 8 was re-split: 8c header + annotations + title block, 8d the sheet below the diagram, 8e phones + card preview, then Research (now 8g, after the 8f simplification).
+  - 8c is done: the header sits at the top of the blueprint (label, large white title with "Team of 5" pill, monospace meta line, and the approved description at 40rem). The six constraint callouts are drawn with thin leader lines; their text, line breaks, and positions are in `annotations` in `shelflife.js`. The bordered title block sits below the Analytics room in the bottom right corner (`titleBlock` in the data file; "18 tables" is counted from the data). Moderation and Analytics boxes moved left (x 905) to make room for the ADMIN_FLAG callout.
+  - 8d is done: the blueprint now runs from the header down to "end of sheet" (`ShelfLifeSheet.jsx`), and the old plain white section is gone. It has dimension-line dividers, the REV / NOTE / REF revision table (rows stack on phones), coral circled markers A–D on the diagram that light up together with their table row on hover or focus, the "Detail A" video frame with corner marks and caption, the outlined "View the repo on GitHub →" pill, and the end-of-sheet line. `revisionNotes` in `shelflife.js` holds rev, text, ref, and marker position. The sheet column is 48rem, left-aligned so it lines up with the left-aligned header. The next-stop sign still sits on the white frame below the sheet; smoothing that is in "Future notes."
+  - 8e is done: at 700px wide and below, the diagram is replaced by stacked room cards (`ShelfLifeRoomCards.jsx`), one per group, each listing its tables with a column count. Tapping a table shows all its columns with key tags, plus "→ links to …" and "← linked from …" in plain text (both derived from the foreign keys). Role buttons and the open table share state with the desktop diagram, so highlighting works in both. The title block sits after the cards, and the hint says "tap" instead of "click." Between 700px and about 900px the full diagram still scrolls sideways. The home page ShelfLife card preview now labels its boxes USER, LISTING, and ITEM (names read from `shelflife.js`). The ShelfLife world is complete.
+- Design change after 8d: the A–D markers and the REV / REF columns made the contributions harder to read, so they're being removed (see "Contributions box" in "ShelfLife world"). This is step 8f.
+  - 8f is done: the A–D markers are gone from the diagram, and the revision table is now one bordered box (`.bp-contributions`) with the four sentences, a coral dash at the start of each row, and a thin rule between rows. `revisionNotes` was replaced by a plain `contributions` list of the four sentences in `shelflife.js`, and the shared hover state and unused table and marker styles were removed.
+- Next: Step 8g (Research "Lab notebook"), which needs a design from the design chat first.
 
 ## Future notes (not scheduled yet)
 

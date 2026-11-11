@@ -8,7 +8,8 @@ export const shelflifeLinks = {
 }
 
 // Diagram canvas and table box sizes, in SVG units.
-export const canvas = { width: 1200, height: 660 }
+// Extra height at the bottom holds the title block (and an expanded PRICE_HISTORY box).
+export const canvas = { width: 1200, height: 748 }
 export const box = { width: 160, header: 24, row: 16, padding: 8 }
 
 // The four "rooms" (dashed outlines), with their position on the canvas.
@@ -188,14 +189,14 @@ export const tables = [
   {
     id: 'ADMIN',
     group: 'moderation',
-    x: 945,
+    x: 905,
     y: 70,
     columns: [{ name: 'admin_id', pk: true }, { name: 'name' }, { name: 'email', unique: true }],
   },
   {
     id: 'ADMIN_FLAG',
     group: 'moderation',
-    x: 945,
+    x: 905,
     y: 150,
     columns: [
       { name: 'admin_id', pk: true, fk: 'ADMIN' },
@@ -205,7 +206,7 @@ export const tables = [
   {
     id: 'FLAG',
     group: 'moderation',
-    x: 945,
+    x: 905,
     y: 246,
     columns: [
       { name: 'flag_id', pk: true },
@@ -220,14 +221,14 @@ export const tables = [
   {
     id: 'ANALYST',
     group: 'analytics',
-    x: 945,
+    x: 905,
     y: 395,
     columns: [{ name: 'analyst_id', pk: true }, { name: 'name' }, { name: 'email', unique: true }],
   },
   {
     id: 'REPORT',
     group: 'analytics',
-    x: 945,
+    x: 905,
     y: 470,
     columns: [
       { name: 'report_id', pk: true },
@@ -240,7 +241,7 @@ export const tables = [
   {
     id: 'PLATFORM_METRIC',
     group: 'analytics',
-    x: 945,
+    x: 905,
     y: 560,
     note: 'snapshot table · no links',
     columns: [
@@ -254,14 +255,71 @@ export const tables = [
 ]
 
 // Small callouts pointing at real constraints in the schema.
+// On the diagram: `lines` is the text split to fit, (x, y) is where the first
+// line starts, and `leader` is the thin line to the table [x1, y1, x2, y2].
 export const annotations = [
-  { table: 'TRANSACTION', text: 'one sale per listing' },
-  { table: 'REVIEW', text: 'rating 1–5' },
-  { table: 'COURSE_MATERIAL', text: 'an item links to a course only once' },
-  { table: 'WISHLIST', text: 'no duplicate saves' },
-  { table: 'BUNDLE_LISTING', text: 'junction table · composite key' },
-  { table: 'ADMIN_FLAG', text: 'junction table · composite key' },
+  {
+    table: 'TRANSACTION',
+    text: 'one sale per listing',
+    lines: ['one sale per listing'],
+    x: 690,
+    y: 160,
+    leader: [750, 165, 750, 180],
+  },
+  {
+    table: 'REVIEW',
+    text: 'rating 1–5',
+    lines: ['rating 1–5'],
+    x: 690,
+    y: 600,
+    leader: [700, 590, 700, 568],
+  },
+  {
+    table: 'COURSE_MATERIAL',
+    text: 'an item links to a course only once',
+    lines: ['an item links', 'to a course', 'only once'],
+    x: 130,
+    y: 400,
+    leader: [140, 390, 140, 380],
+  },
+  {
+    table: 'WISHLIST',
+    text: 'no duplicate saves',
+    lines: ['no duplicate saves'],
+    x: 280,
+    y: 624,
+    leader: [290, 614, 290, 600],
+  },
+  {
+    table: 'BUNDLE_LISTING',
+    text: 'junction table · composite key',
+    lines: ['junction table', 'composite key'],
+    x: 358,
+    y: 158,
+    leader: [420, 174, 420, 188],
+  },
+  {
+    table: 'ADMIN_FLAG',
+    text: 'junction table · composite key',
+    lines: ['junction table', 'composite key'],
+    x: 1080,
+    y: 178,
+    leader: [1076, 182, 1065, 182],
+  },
 ]
+
+// The bordered title block in the bottom right corner of the drawing.
+export const titleBlock = {
+  x: 880,
+  y: 660,
+  w: 300,
+  lines: [
+    'ShelfLife · relational schema',
+    'Schema design: Madhav Sabu',
+    'Team project · 5 people · CS 3200',
+    `${tables.length} tables`,
+  ],
+}
 
 // Role buttons: which tables each role touches. "All" is the default.
 export const roles = [
@@ -275,18 +333,12 @@ export const roles = [
   { id: 'admin', label: 'Admin', tables: ['FLAG', 'ADMIN_FLAG', 'COURSE', 'DEPARTMENT'] },
 ]
 
-// My contributions, as red-pencil notes. `target` is what the marker points to.
-export const revisionNotes = [
-  {
-    target: 'titleBlock',
-    text: 'I designed the relational schema, including the linked tables and foreign keys.',
-  },
-  {
-    target: 'PRICE_HISTORY',
-    text: 'I found and fixed data integrity issues, such as missing price-history records.',
-  },
-  { target: 'diagram', text: 'I generated the mock data the team used for testing.' },
-  { target: 'analytics', text: 'I helped the team debug the Streamlit analytics dashboard.' },
+// My contributions, shown in the box below the diagram. Use exactly these sentences.
+export const contributions = [
+  'I designed the relational schema, including the linked tables and foreign keys.',
+  'I generated the mock data the team used for testing.',
+  'I found and fixed data integrity issues, such as missing price-history records.',
+  'I helped the team debug the Streamlit analytics dashboard.',
 ]
 
 // ---------- Helpers ----------

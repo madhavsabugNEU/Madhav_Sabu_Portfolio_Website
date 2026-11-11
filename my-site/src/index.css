@@ -2180,14 +2180,123 @@ article + article {
 
 .blueprint h1 {
   margin: 0;
-  font-size: clamp(1.6rem, 4vw, 2.25rem);
-  line-height: 1.15;
+  font-size: clamp(1.9rem, 5vw, 2.75rem);
+  line-height: 1.1;
   color: var(--bp-text);
+}
+
+.blueprint-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.9rem;
+}
+
+.bp-pill {
+  padding: 0.15rem 0.65rem;
+  border: 1px solid var(--bp-line);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--bp-text-2);
+}
+
+.blueprint-meta {
+  margin: 0.6rem 0 0;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--bp-text-2);
+}
+
+.blueprint-intro {
+  max-width: 40rem;
+  margin: 0.9rem 0 0;
+  font-size: 1.05rem;
+  color: var(--bp-text-2);
+}
+
+/* Callouts on the diagram. */
+.bp-annotation text {
+  fill: var(--bp-text-2);
+  font-size: 10px;
+}
+
+.bp-leader {
+  stroke: var(--bp-line);
+  stroke-width: 0.8;
+  stroke-opacity: 0.7;
+}
+
+/* Title block in the bottom right corner. */
+.bp-title-block rect,
+.bp-title-block line {
+  fill: none;
+  stroke: var(--bp-line);
+  stroke-width: 1.2;
+}
+
+.bp-title-block text {
+  fill: var(--bp-text-2);
+  font-size: 11px;
+}
+
+.bp-title-block text.is-title {
+  fill: var(--bp-text);
+  font-weight: 700;
+}
+
+/* Role buttons and hint above the diagram. */
+.bp-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  margin-top: 2rem;
+}
+
+.bp-roles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.bp-role {
+  padding: 0.3rem 0.85rem;
+  border: 1px solid var(--bp-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--bp-text);
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.bp-role:hover {
+  background: rgb(207 227 255 / 0.12);
+}
+
+.bp-role[aria-pressed='true'] {
+  border-color: var(--bp-amber);
+  background: var(--bp-amber);
+  color: var(--bp-bg);
+}
+
+.bp-role:focus-visible {
+  outline: 2px solid var(--bp-amber);
+  outline-offset: 2px;
+}
+
+.bp-hint {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--bp-text-2);
 }
 
 /* The diagram keeps a readable size and scrolls sideways on narrow screens. */
 .bp-diagram-wrap {
-  margin-top: 2rem;
+  margin-top: 1rem;
   overflow-x: auto;
 }
 
@@ -2218,12 +2327,98 @@ article + article {
   stroke: var(--bp-line);
   stroke-width: 1.2;
   stroke-opacity: 0.85;
+  stroke-dasharray: 1;
+  animation: bp-draw var(--draw-ms) ease-out var(--draw-delay) both;
 }
 
 .bp-arrow {
   fill: none;
   stroke: var(--bp-line);
   stroke-width: 1.4;
+  animation: bp-fade 150ms ease-out calc(var(--draw-delay) + var(--draw-ms)) both;
+}
+
+@keyframes bp-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes bp-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bp-link,
+  .bp-arrow {
+    animation: none;
+  }
+}
+
+.bp-link-group {
+  transition: opacity 150ms ease;
+}
+
+.bp-link-group.is-dim {
+  opacity: 0.2;
+}
+
+.bp-link-group.is-linked .bp-link,
+.bp-link-group.is-linked .bp-arrow {
+  stroke: var(--bp-text);
+  stroke-width: 2;
+  stroke-opacity: 1;
+}
+
+/* Tables are clickable. */
+.bp-table {
+  cursor: pointer;
+  outline: none;
+  transition: opacity 150ms ease;
+}
+
+.bp-table:hover .bp-box,
+.bp-table:focus-visible .bp-box {
+  stroke: var(--bp-text);
+  stroke-width: 2;
+}
+
+.bp-table.is-dim {
+  opacity: 0.35;
+}
+
+.bp-table.is-open .bp-box,
+.bp-table.is-linked .bp-box {
+  stroke: var(--bp-text);
+  stroke-width: 2;
+}
+
+.bp-table.is-linked .bp-box-head {
+  fill-opacity: 0.4;
+}
+
+/* Role highlighting wins over the open / linked outline. */
+.bp-table.is-role .bp-box,
+.bp-table.is-role .bp-box-head {
+  stroke: var(--bp-amber);
+  stroke-width: 2;
+}
+
+.bp-table.is-role .bp-box-head {
+  fill: var(--bp-amber);
+  fill-opacity: 0.35;
+}
+
+.bp-toggle {
+  fill: var(--bp-text-2);
+  font-size: 13px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bp-table,
+  .bp-link-group {
+    transition: none;
+  }
 }
 
 .bp-box {
@@ -2260,4 +2455,341 @@ article + article {
   fill: var(--bp-text-2);
   font-size: 10px;
   font-style: italic;
+}
+
+/* ---------- Blueprint sheet below the diagram ---------- */
+
+.bp-sheet {
+  margin-top: 3rem;
+}
+
+/* Left-aligned so it lines up with the header above. */
+.bp-sheet-section {
+  max-width: 48rem;
+}
+
+.bp-sheet-section + .bp-sheet-section {
+  margin-top: 3rem;
+}
+
+/* Dimension-line divider: ticks at both ends, label centered on the line. */
+.bp-dim {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1.25rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--bp-text-2);
+}
+
+.bp-dim::before,
+.bp-dim::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 1px;
+  height: 0.7rem;
+  background: var(--bp-line);
+  transform: translateY(-50%);
+}
+
+.bp-dim::before {
+  left: 0;
+}
+
+.bp-dim::after {
+  right: 0;
+}
+
+.bp-dim-line {
+  flex: 1;
+  height: 1px;
+  background: var(--bp-line);
+}
+
+.bp-dim-label {
+  flex: none;
+}
+
+/* Contributions box: one row per contribution, each starting with a coral dash. */
+.bp-contributions {
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgb(207 227 255 / 0.4);
+  list-style: none;
+}
+
+.bp-contributions li {
+  position: relative;
+  padding: 0.75rem 1rem 0.75rem 2.25rem;
+  color: var(--bp-text);
+}
+
+.bp-contributions li + li {
+  border-top: 1px solid rgb(207 227 255 / 0.4);
+}
+
+.bp-contributions li::before {
+  content: '';
+  position: absolute;
+  top: 1.45rem;
+  left: 1rem;
+  width: 0.7rem;
+  height: 2px;
+  background: var(--bp-coral);
+}
+
+/* "Detail A": the demo video in a framed detail view. */
+.bp-detail {
+  margin: 0;
+}
+
+.bp-detail-frame {
+  position: relative;
+  padding: 12px;
+  border: 1px solid var(--bp-line);
+  background: var(--bp-box);
+}
+
+.bp-detail-frame .video {
+  margin: 0;
+}
+
+.bp-corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 0 solid var(--bp-text);
+}
+
+.bp-corner.is-tl {
+  top: -5px;
+  left: -5px;
+  border-top-width: 2px;
+  border-left-width: 2px;
+}
+
+.bp-corner.is-tr {
+  top: -5px;
+  right: -5px;
+  border-top-width: 2px;
+  border-right-width: 2px;
+}
+
+.bp-corner.is-bl {
+  bottom: -5px;
+  left: -5px;
+  border-bottom-width: 2px;
+  border-left-width: 2px;
+}
+
+.bp-corner.is-br {
+  right: -5px;
+  bottom: -5px;
+  border-right-width: 2px;
+  border-bottom-width: 2px;
+}
+
+.bp-detail-caption {
+  margin-top: 0.6rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--bp-text-2);
+}
+
+.bp-links {
+  margin: 1.5rem 0 0;
+}
+
+.bp-repo {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--bp-line);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--bp-text-2);
+  text-decoration: none;
+}
+
+.bp-repo:hover,
+.bp-repo:focus-visible {
+  border-color: var(--bp-text);
+  color: var(--bp-text);
+}
+
+/* End of the sheet: a border line across the bottom with a label at the right. */
+.bp-end {
+  margin: 3.5rem 0 0;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--bp-line);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-align: right;
+  color: var(--bp-text-2);
+}
+
+/* ---------- Blueprint on phones: rooms as stacked cards ---------- */
+
+.bp-rooms,
+.bp-hint-phone {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .bp-diagram-wrap,
+  .bp-hint-desktop {
+    display: none;
+  }
+
+  .bp-hint-phone {
+    display: inline;
+  }
+
+  .bp-rooms {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+}
+
+.bp-room-card {
+  padding: 0.9rem 1rem 1rem;
+  border: 1px dashed rgb(207 227 255 / 0.5);
+  border-radius: 6px;
+}
+
+.bp-room-card-label {
+  margin: 0 0 0.6rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bp-text-2);
+}
+
+.bp-room-card > ul {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bp-room-table {
+  border: 1px solid var(--bp-line);
+  border-radius: 3px;
+  background: var(--bp-box);
+  transition: opacity 150ms ease;
+}
+
+.bp-room-table > button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border: 0;
+  background: rgb(207 227 255 / 0.12);
+  color: var(--bp-text);
+  font-family: var(--mono);
+  text-align: left;
+  cursor: pointer;
+}
+
+.bp-room-table > button:focus-visible {
+  outline: 2px solid var(--bp-text);
+  outline-offset: -2px;
+}
+
+.bp-room-table-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.bp-room-table-count {
+  font-size: 0.7rem;
+  color: var(--bp-text-2);
+}
+
+.bp-room-table.is-dim {
+  opacity: 0.35;
+}
+
+.bp-room-table.is-linked,
+.bp-room-table.is-open {
+  border-color: var(--bp-text);
+}
+
+.bp-room-table.is-role {
+  border-color: var(--bp-amber);
+  box-shadow: 0 0 0 1px var(--bp-amber);
+}
+
+.bp-room-table.is-role > button {
+  background: rgb(255 210 138 / 0.25);
+}
+
+.bp-room-table-detail {
+  padding: 0.5rem 0.7rem 0.7rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--bp-text-2);
+}
+
+.bp-room-cols {
+  margin: 0 0 0.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.bp-room-cols li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.1rem 0;
+}
+
+.bp-room-key {
+  color: var(--bp-text);
+  font-size: 0.65rem;
+}
+
+.bp-room-table-detail p {
+  margin: 0.25rem 0 0;
+  color: var(--bp-text);
+}
+
+.bp-room-title-block {
+  border: 1px solid var(--bp-line);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--bp-text-2);
+}
+
+.bp-room-title-block p {
+  margin: 0;
+  padding: 0.35rem 0.7rem;
+}
+
+.bp-room-title-block p + p {
+  border-top: 1px solid var(--bp-line);
+}
+
+.bp-room-title-block p.is-title {
+  font-weight: 700;
+  color: var(--bp-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bp-room-table {
+    transition: none;
+  }
 }
